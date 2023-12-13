@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use std::vec::IntoIter;
 
-use blockifier::execution::cairo1_execution::CallResult;
+use blockifier::execution::entry_point_execution::CallResult;
 use blockifier::execution::call_info::CallInfo;
 use blockifier::transaction::objects::TransactionExecutionInfo;
 use cairo_felt::Felt252;
