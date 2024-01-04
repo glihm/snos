@@ -57,7 +57,7 @@ pub fn felt_vm2api(felt: Felt252) -> StarkFelt {
 }
 
 pub fn felt_api2vm(felt: StarkFelt) -> Felt252 {
-    Felt252::from_dec_str(felt.to_string().trim_start_matches("0x")).expect("Couldn't parse bytes")
+    Felt252::from_hex(&felt.to_string()).expect("Couldn't parse bytes")
 }
 
 pub fn felt_vm2usize(felt_op: Option<&Felt252>) -> Result<usize, SnOsError> {
