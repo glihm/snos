@@ -117,7 +117,7 @@ impl SerializeAs<Felt252> for Felt252Str {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&format!("0x{}", value.to_hex_string()))
+        serializer.serialize_str(&value.to_hex_string())
     }
 }
 
@@ -187,7 +187,7 @@ impl SerializeAs<Felt252> for Felt252HexNoPrefix {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&format!("0{}", value.to_hex_string()))
+        serializer.serialize_str(&value.to_hex_string())
     }
 }
 
