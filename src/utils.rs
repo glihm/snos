@@ -49,7 +49,7 @@ pub fn felt_to_bits_api(felt: StarkFelt) -> BitVec<u8, Msb0> {
 }
 
 pub fn felt_from_hex_unchecked(hex_str: &str) -> Felt252 {
-    Felt252::from_hex(hex_str.trim_start_matches("0x")).unwrap()
+    Felt252::from_hex(hex_str).unwrap()
 }
 
 pub fn felt_vm2api(felt: Felt252) -> StarkFelt {
