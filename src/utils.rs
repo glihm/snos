@@ -108,7 +108,7 @@ impl<'de> DeserializeAs<'de, Felt252> for Felt252Str {
         let felt_str = String::deserialize(deserializer)?;
         let felt_str = felt_str.trim_start_matches("0x");
 
-        Felt252::from_hex(felt_str).map_err(de::Error::custom)
+        Felt252::from_hex(felt_str).map_err(|e| de::Error::custom(format!("felt from hex str parse error: {e}")))
     }
 }
 
@@ -131,7 +131,7 @@ impl<'de> DeserializeAs<'de, Felt252> for Felt252StrDec {
         let felt_str = String::deserialize(deserializer)?;
         let felt_str = felt_str.trim_start_matches("0x");
 
-        Felt252::from_dec_str(felt_str).map_err(de::Error::custom)
+        Felt252::from_dec_str(felt_str).map_err(|e| de::Error::custom(format!("felt from dec str parse error: {e}")))
     }
 }
 
@@ -152,6 +152,7 @@ impl<'de> DeserializeAs<'de, Felt252> for Felt252Num {
         D: Deserializer<'de>,
     {
         let felt_num = Number::deserialize(deserializer)?;
+
         match Felt252::from_dec_str(&felt_num.to_string()) {
             Ok(x) => Ok(x),
             Err(e) => Err(de::Error::custom(format!("felt_from_number parse error: {e}"))),
@@ -177,7 +178,7 @@ impl<'de> DeserializeAs<'de, Felt252> for Felt252HexNoPrefix {
         D: Deserializer<'de>,
     {
         let felt_str = String::deserialize(deserializer)?;
-        Felt252::from_hex(&felt_str).map_err(de::Error::custom)
+        Felt252::from_hex(&format!("0x{felt_str}")).map_err(de::Error::custom)
     }
 }
 
