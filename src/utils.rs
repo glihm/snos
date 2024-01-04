@@ -4,10 +4,9 @@ use anyhow::anyhow;
 use bitvec::prelude::{BitSlice, BitVec, Msb0};
 use bitvec::view::BitView;
 use blockifier::execution::contract_class::ContractClassV0;
-use cairo_vm::felt::{felt_str, Felt252};
+use cairo_vm::Felt252;
 use cairo_vm_blockifier::types::program::Program;
 use lazy_static::lazy_static;
-use num_traits::Num;
 use regex::Regex;
 use serde::{de, ser, Deserialize, Deserializer, Serialize, Serializer};
 use serde_json::Number;
@@ -50,15 +49,15 @@ pub fn felt_to_bits_api(felt: StarkFelt) -> BitVec<u8, Msb0> {
 }
 
 pub fn felt_from_hex_unchecked(hex_str: &str) -> Felt252 {
-    Felt252::from_str_radix(hex_str.trim_start_matches("0x"), 16).unwrap()
+    Felt252::from_hex(hex_str.trim_start_matches("0x")).unwrap()
 }
 
 pub fn felt_vm2api(felt: Felt252) -> StarkFelt {
-    stark_felt!(felt.to_str_radix(16).as_str())
+    stark_felt!(felt.to_hex_string().as_str())
 }
 
 pub fn felt_api2vm(felt: StarkFelt) -> Felt252 {
-    felt_str!(felt.to_string().trim_start_matches("0x"), 16)
+    Felt252::from_dec_str(felt.to_string().trim_start_matches("0x")).expect("Couldn't parse bytes")
 }
 
 pub fn felt_vm2usize(felt_op: Option<&Felt252>) -> Result<usize, SnOsError> {
@@ -109,7 +108,7 @@ impl<'de> DeserializeAs<'de, Felt252> for Felt252Str {
         let felt_str = String::deserialize(deserializer)?;
         let felt_str = felt_str.trim_start_matches("0x");
 
-        Felt252::from_str_radix(felt_str, 16).map_err(de::Error::custom)
+        Felt252::from_hex(felt_str).map_err(de::Error::custom)
     }
 }
 
@@ -118,7 +117,7 @@ impl SerializeAs<Felt252> for Felt252Str {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&format!("0x{}", value.to_str_radix(16)))
+        serializer.serialize_str(&format!("0x{}", value.to_hex_string()))
     }
 }
 
@@ -132,7 +131,7 @@ impl<'de> DeserializeAs<'de, Felt252> for Felt252StrDec {
         let felt_str = String::deserialize(deserializer)?;
         let felt_str = felt_str.trim_start_matches("0x");
 
-        Felt252::from_str_radix(felt_str, 10).map_err(de::Error::custom)
+        Felt252::from_dec_str(felt_str).map_err(de::Error::custom)
     }
 }
 
@@ -141,7 +140,7 @@ impl SerializeAs<Felt252> for Felt252StrDec {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&value.to_str_radix(10))
+        serializer.serialize_str(&format!("{}", value))
     }
 }
 
@@ -153,9 +152,9 @@ impl<'de> DeserializeAs<'de, Felt252> for Felt252Num {
         D: Deserializer<'de>,
     {
         let felt_num = Number::deserialize(deserializer)?;
-        match Felt252::parse_bytes(felt_num.to_string().as_bytes(), 10) {
-            Some(x) => Ok(x),
-            None => Err(de::Error::custom(String::from("felt_from_number parse error"))),
+        match Felt252::from_dec_str(&felt_num.to_string()) {
+            Ok(x) => Ok(x),
+            Err(e) => Err(de::Error::custom(format!("felt_from_number parse error: {e}"))),
         }
     }
 }
@@ -165,7 +164,7 @@ impl SerializeAs<Felt252> for Felt252Num {
     where
         S: Serializer,
     {
-        let num = Number::from_string_unchecked(value.to_str_radix(10));
+        let num = Number::from_string_unchecked(format!("{}", value));
         num.serialize(serializer)
     }
 }
@@ -178,7 +177,7 @@ impl<'de> DeserializeAs<'de, Felt252> for Felt252HexNoPrefix {
         D: Deserializer<'de>,
     {
         let felt_str = String::deserialize(deserializer)?;
-        Felt252::from_str_radix(&felt_str, 16).map_err(de::Error::custom)
+        Felt252::from_hex(&felt_str).map_err(de::Error::custom)
     }
 }
 
@@ -187,7 +186,7 @@ impl SerializeAs<Felt252> for Felt252HexNoPrefix {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&format!("0{}", value.to_str_radix(16)))
+        serializer.serialize_str(&format!("0{}", value.to_hex_string()))
     }
 }
 
