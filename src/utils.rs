@@ -219,7 +219,7 @@ mod tests {
 
     #[test]
     fn felt_conversions() {
-        let vm_felt = felt_str!("DEADBEEF", 16);
+        let vm_felt = Felt252::from_hex("0xDEADBEEF").unwrap();
         let api_felt = stark_felt!("DEADBEEF");
 
         assert_eq!(vm_felt, felt_api2vm(api_felt));
