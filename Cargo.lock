@@ -290,14 +290,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "bincode"
-version = "2.0.0-rc.3"
-source = "git+https://github.com/bincode-org/bincode.git?tag=v2.0.0-rc.3#aada4bb4cb457677a4b8e47572ae7ca8dd44927c"
-dependencies = [
- "serde",
-]
-
-[[package]]
 name = "bit-set"
 version = "0.5.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -466,7 +458,8 @@ checksum = "3a4f925191b4367301851c6d99b09890311d74b0d43f274c0b34c86d308a3663"
 [[package]]
 name = "cairo-felt"
 version = "0.8.7"
-source = "git+https://github.com/dojoengine/cairo-rs.git?rev=6c5bf89088ec9048fa02d93b7197cac91d9513b7#6c5bf89088ec9048fa02d93b7197cac91d9513b7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5972097b8800ca5dffb458040e74c724a2ac4fa4b5b480b50f5b96c7e67d6427"
 dependencies = [
  "lazy_static",
  "num-bigint",
@@ -908,10 +901,11 @@ dependencies = [
 [[package]]
 name = "cairo-vm"
 version = "0.8.7"
-source = "git+https://github.com/dojoengine/cairo-rs.git?rev=6c5bf89088ec9048fa02d93b7197cac91d9513b7#6c5bf89088ec9048fa02d93b7197cac91d9513b7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "00d9bf139b0fe845627cf09d11af43eec9575dba702033bf6b08050c776b8553"
 dependencies = [
  "anyhow",
- "bincode 2.0.0-rc.3 (git+https://github.com/bincode-org/bincode.git?tag=v2.0.0-rc.3)",
+ "bincode",
  "bitvec",
  "cairo-felt",
  "generic-array",
@@ -937,10 +931,10 @@ dependencies = [
 [[package]]
 name = "cairo-vm"
 version = "1.0.0-rc0"
-source = "git+https://github.com/lambdaclass/cairo-vm#b020f11316bac0afc38313e2fc27063db1429f7c"
+source = "git+https://github.com/glihm/cairo-vm.git?branch=vm-main-dojo#f81d625aef00244d6ce3ef9c8e48e967e83f191f"
 dependencies = [
  "anyhow",
- "bincode 2.0.0-rc.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "bincode",
  "bitvec",
  "generic-array",
  "hashbrown 0.14.3",

@@ -8,7 +8,9 @@ anyhow = "1.0.75"
 base64 = "0.21.3"
 bitvec = { version = "1.0.1", features = ["serde"] }
 blockifier = { version = "0.4.0", features = ["testing"] }
-cairo-vm = { git = "https://github.com/lambdaclass/cairo-vm", features = ["extensive_hints"] }
+#cairo-vm = { git = "https://github.com/lambdaclass/cairo-vm", features = ["extensive_hints"] }
+# Patch does not support features.
+cairo-vm = { git = "https://github.com/glihm/cairo-vm.git", branch = "vm-main-dojo", features = [ "extensive_hints" ] }
 hex = "0.4.3"
 indexmap = "1.9.2"
 indoc = "2"
@@ -34,6 +36,4 @@ pretty_assertions = "1.4.0"
 rstest = "0.18.2"
 
 [patch.crates-io]
-cairo-felt = { git = "https://github.com/dojoengine/cairo-rs.git", rev = "6c5bf89088ec9048fa02d93b7197cac91d9513b7" }
-cairo-vm = { git = "https://github.com/dojoengine/cairo-rs.git", rev = "6c5bf89088ec9048fa02d93b7197cac91d9513b7" }
 blockifier = { git = "https://github.com/glihm/blockifier", branch = "dojo-cairo-2.4" }
