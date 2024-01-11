@@ -32,3 +32,8 @@ zip = { version = "0.6.6", features = ["deflate-zlib"] }
 [dev-dependencies]
 pretty_assertions = "1.4.0"
 rstest = "0.18.2"
+
+[patch.crates-io]
+cairo-felt = { git = "https://github.com/dojoengine/cairo-rs.git", rev = "6c5bf89088ec9048fa02d93b7197cac91d9513b7" }
+cairo-vm = { git = "https://github.com/dojoengine/cairo-rs.git", rev = "6c5bf89088ec9048fa02d93b7197cac91d9513b7" }
+blockifier = { git = "https://github.com/glihm/blockifier", branch = "dojo-cairo-2.4" }
