@@ -41,11 +41,11 @@ impl<S: StateReader> SharedState<S> {
         }
     }
     pub fn get_block_num(&self) -> BlockNumber {
-        self.block_context.block_number
+        self.block_context.block_info.block_number
     }
 
     pub fn increment_block(&mut self) {
-        self.block_context.block_number = self.block_context.block_number.next();
+        self.block_context.block_info.block_number = self.block_context.block_info.block_number.next();
     }
 
     pub fn get_storage_root(&self, block_num: BlockNumber) -> (StarkFelt, u64) {
