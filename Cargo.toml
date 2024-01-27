@@ -7,8 +7,9 @@ version = "0.1.0"
 anyhow = "1.0.75"
 base64 = "0.21.3"
 bitvec = { version = "1.0.1", features = ["serde"] }
-blockifier = { git = "https://github.com/keep-starknet-strange/blockifier", branch = "snos/callinfo-clone", features = ["clone", "testing"] }
+blockifier = { path = "/mnt/g/sn/blockifier/crates/blockifier" }
 cairo-vm = { git = "https://github.com/lambdaclass/cairo-vm", features = ["extensive_hints"] }
+#cairo-vm = { git = "https://github.com/glihm/cairo-vm", branch = "dojo-saya-v092" }
 hex = "0.4.3"
 indexmap = "1.9.2"
 indoc = "2"
@@ -29,6 +30,13 @@ tokio = "1.32.0"
 uuid = { version = "1.4.0", features = ["v4", "serde"] }
 zip = { version = "0.6.6", features = ["deflate-zlib"] }
 
+#katana-primitives = { path = "/mnt/g/dojo/dojo/crates/katana/primitives" }
+katana-primitives = { git = "https://github.com/glihm/dojo", branch = "wip-250" }
+
 [dev-dependencies]
 pretty_assertions = "1.4.0"
 rstest = "0.18.2"
+
+# [patch.crates-io]
+# cairo-felt = { git = "https://github.com/glihm/cairo-vm", branch = "dojo-saya-v092" }
+# cairo-vm = { git = "https://github.com/glihm/cairo-vm", branch = "dojo-saya-v092" }

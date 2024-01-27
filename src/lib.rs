@@ -25,6 +25,8 @@ use execution::helper::ExecutionHelperWrapper;
 use io::output::StarknetOsOutput;
 use state::SharedState;
 
+//use katana_primitives::block::BlockTag;
+
 pub struct SnOsRunner {
     // CairoVM layout type(default `starknet_with_keccak`)
     layout: String,
